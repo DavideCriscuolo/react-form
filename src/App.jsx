@@ -14,21 +14,43 @@ import { ListArticles } from "./data/ListArticles";
 import { useState } from "react";
 
 function App() {
+  const [newArticle, setNewArticle] = useState({
+    title: "",
+  });
+
+  const [articleList, setNewArticleList] = useState(ListArticles);
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    setNewArticleList([newArticle, ...articleList]);
+  }
+
   return (
     <>
       <main>
         <div className="container p-5">
           <ul className="list-group">
-            {ListArticles.map((article) => {
+            {articleList.map((article, index) => {
               return (
-                <li key={article.id} className="list-group-item">
+                <li key={index} className="list-group-item ">
                   {article.title}
                 </li>
               );
             })}
           </ul>
-          <form>
-            <input className=" form-control my-2" type="text" />
+          <form onSubmit={handleSubmit}>
+            <div className="my-5">
+              <label> Inserisci il nome del nuovo articolo</label>
+              <input
+                className=" form-control my-2"
+                type="text"
+                value={newArticle.title}
+                onChange={(e) => {
+                  setNewArticle({ title: e.target.value });
+                }}
+              />
+            </div>
             <button type="submit" className="btn btn-primary">
               Salva
             </button>
