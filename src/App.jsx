@@ -25,11 +25,24 @@ function App() {
 
     setNewArticleList([newArticle, ...articleList]);
   }
+
   function removeArticle(i) {
     const updateArticle = articleList.filter((article, index) => {
       return i !== index;
     });
     setNewArticleList(updateArticle);
+  }
+  function mofyArticle(i) {
+    const mdify = articleList.find((article, index) => {
+      return index === i;
+    });
+
+    setNewArticleList(
+      articleList.map((article, index) =>
+        index === i ? { ...article, title: newArticle.title } : article
+      )
+    );
+    console.log(articleList);
   }
 
   return (
@@ -41,17 +54,28 @@ function App() {
               return (
                 <li
                   key={index}
-                  className="list-group-item d-flex justify-content-between  "
+                  className="list-group-item d-flex justify-content-between align-items-center "
                 >
                   <span>{article.title} </span>
-                  <button
-                    className="btn btn-warning"
-                    onClick={() => {
-                      removeArticle(index);
-                    }}
-                  >
-                    <i class="fa fa-trash" aria-hidden="true"></i>
-                  </button>
+                  <div>
+                    {" "}
+                    <button
+                      className="btn btn-warning mx-1"
+                      onClick={() => {
+                        removeArticle(index);
+                      }}
+                    >
+                      <i className="fa fa-trash" aria-hidden="true"></i>
+                    </button>
+                    <button
+                      className="btn btn-warning"
+                      onClick={() => {
+                        mofyArticle(index);
+                      }}
+                    >
+                      Modifica
+                    </button>{" "}
+                  </div>
                 </li>
               );
             })}
