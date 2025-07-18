@@ -25,6 +25,12 @@ function App() {
 
     setNewArticleList([newArticle, ...articleList]);
   }
+  function removeArticle(i) {
+    const updateArticle = articleList.filter((article, index) => {
+      return i !== index;
+    });
+    setNewArticleList(updateArticle);
+  }
 
   return (
     <>
@@ -33,8 +39,19 @@ function App() {
           <ul className="list-group">
             {articleList.map((article, index) => {
               return (
-                <li key={index} className="list-group-item ">
-                  {article.title}
+                <li
+                  key={index}
+                  className="list-group-item d-flex justify-content-between  "
+                >
+                  <span>{article.title} </span>
+                  <button
+                    className="btn btn-warning"
+                    onClick={() => {
+                      removeArticle(index);
+                    }}
+                  >
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                  </button>
                 </li>
               );
             })}
